@@ -16,6 +16,7 @@ class Lesson(models.Model):
 
 class Class(models.Model):
     name = models.CharField(verbose_name='Класс', max_length=50)
+    school_name = models.ForeignKey('School', verbose_name='Название школы', on_delete=models.PROTECT, related_name='сlasses', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -85,6 +86,7 @@ class LessonTime(models.Model):
 
 class Audience(models.Model):
     audience = models.CharField(verbose_name='Аудитория', max_length=5)
+    school_name = models.ForeignKey('School', verbose_name='Название школы', on_delete=models.PROTECT, related_name='audiences', blank=True, null=True)
 
     def __str__(self):
         return self.audience
@@ -97,6 +99,7 @@ class Audience(models.Model):
 
 class School(models.Model):
     school_name = models.CharField(verbose_name='Школа', max_length=100, blank=True)
+
 
     def __str__(self):
         return self.school_name
@@ -111,6 +114,7 @@ class Teacher(models.Model):
     teacher_last_name = models.CharField(verbose_name='Фамилия учителя', max_length=50)
     teacher_first_name = models.CharField(verbose_name='Имя учителя', max_length=50)
     teacher_middle_name = models.CharField(verbose_name='Отчество учителя', max_length=50)
+    school_name = models.ForeignKey('School', verbose_name='Название школы', on_delete=models.PROTECT, related_name='teachers', blank=True, null=True)
 
     def __str__(self):
         return f'{self.teacher_last_name} {self.teacher_first_name} {self.teacher_middle_name}'
@@ -122,7 +126,7 @@ class Teacher(models.Model):
 
 
 class Schedule(models.Model):
-    school = models.ForeignKey('School', verbose_name='Школа', on_delete=models.PROTECT)
+    school = models.ForeignKey('School', verbose_name='Школа', on_delete=models.PROTECT, blank=True, null=True)
     lesson = models.ForeignKey('Lesson', verbose_name='Урок', on_delete=models.PROTECT)
     s_class = models.ForeignKey('Class', verbose_name='Класс', on_delete=models.PROTECT)
     weekday = models.ForeignKey('Weekday', verbose_name='День недели', on_delete=models.PROTECT)
@@ -136,4 +140,5 @@ class Schedule(models.Model):
     class Meta:
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписание'
-        ordering = ['school', 's_class']
+        unique_together = ('school', 'teacher', 'audience', 'lesson_time')
+        ordering = ['weekday', 'lesson_time']

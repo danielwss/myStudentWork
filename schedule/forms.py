@@ -12,4 +12,4 @@ class UserLoginForm(AuthenticationForm):
 class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
-        fields = ['lesson', 's_class', 'weekday', 'lesson_time', 'audience', 'teacher', 'school']
+        fields = ['lesson', 'weekday', 'lesson_time']
