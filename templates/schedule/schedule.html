@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <h1 class="cover-heading">Расписание уроков {{  }}</h1>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            {% if schedule.count >= 1 %}
+                <th>#</th>
+                <th>День недели</th>
+                <th>Номер урока</th>
+                <th>Предмет</th>
+                <th>Класс</th>
+                <th>Аудитория</th>
+                <th>Учитель</th>
+
+            {% else %}
+                <p>Уроки отсутствуют</p>
+            {% endif %}
+
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for cup in cups %}
+            <tr>
+                <td>{{ schedule.weekday }}</td>
+                <td>{{ schedule.lesson_time }}</td>
+                <td>{{ schedule.lesson }}</td>
+                <td>{{ schedule.s_class }}</td>
+                <td>{{ schedule.audience }}</td>
+                <td>{{ schedule.teacher }}</td>
+            </tr>
+        {% endfor %}
+
+
+        </tbody>
+    </table>
+{#    {% if cups.count >= 1 %}#}
+{#        {% include 'inc/pagination.html' %}#}
+{#    {% endif %}#}
+
+{% endblock %}

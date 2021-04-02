@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+        <p class="lead">
+            <a href="/natch" class="border-button">1-4 классы</a>
+            <a href="/sred" class="border-button">5-9 классы</a>
+            <a href="" class="border-button">10 класс</a>
+            <a href="" class="border-button">11 класс</a>
+        </p>
+
+        <p class="lead">
+           {% if request.user.is_authenticated  %}
+                <a href="/add" class="border-button">Добавить</a>
+                <a href="add.html" class="border-button">Изменить</a>
+                <a href="add.html" class="border-button">Удалить</a>
+                <a class="nav-link border-button" href="{% url 'logout' %}">Выйти</a>
+            {% endif %}
+        </p>
+{% endblock %}

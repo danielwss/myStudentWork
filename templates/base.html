@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Главная страница{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        html, body {
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 9%, rgba(148, 148, 148, 1) 97%);
+            height: 105%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: -webkit-box;
+            display: flex;
+            -ms-flex-pack: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+        }
+
+        .title {
+            display: inline-block;
+            padding: 17px 24px;
+            margin: 10px 20px;
+            position: relative;
+            color: white;
+            background: none;
+            font-weight: 300;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Кнопка с плавающей границей */
+        .border-button {
+            display: inline-block;
+            padding: 20px 30px;
+            margin: 10px 20px;
+            position: relative;
+            color: white;
+            border: 0.05px solid rgba(255, 255, 255, .4);
+            background: none;
+            font-weight: 300;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .border-button:before, .border-button:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            box-sizing: border-box;
+        }
+
+        .border-button:before {
+            bottom: 0;
+            left: 0;
+            border-left: 1px solid white;
+            border-top: 1px solid white;
+            transition: 0s ease opacity .8s, .2s ease width .4s, .2s ease height .6s;
+        }
+
+        .border-button:after {
+            color: aqua;
+            top: 0;
+            right: 0;
+            border-right: 1px solid white;
+            border-bottom: 1px solid white;
+            transition: 0s ease opacity .4s, .2s ease width, .2s ease height .2s;
+        }
+
+        .border-button:hover:before,
+        .border-button:hover:after {
+            height: 100%;
+            width: 100%;
+            opacity: 1;
+        }
+
+        .border-button:hover:before {
+            transition: 0s ease opacity 0s, .2s ease height, .2s ease width .2s;
+        }
+
+        .border-button:hover:after {
+            transition: 0s ease opacity .4s, .2s ease height .4s, .2s ease width .6s;
+        }
+
+        .border-button:hover {
+            background: rgba(255, 255, 255, .2);
+        }
+
+        /*    Полоса        */
+        .hr-shelf {
+
+            margin: -30px auto 10px;
+            padding: 0;
+            height: 40px;
+            border: none;
+            border-bottom: 1px solid #ffffff;
+            box-shadow: 0px 20px 20px -18px #ffffff;
+            width: 100%;
+
+        }
+
+
+        .text-white {
+            font-weight: 300;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0px;;
+        }
+
+        .hidden-menu {
+            display: block;
+            position: fixed;
+            list-style: none;
+            padding: 10px;
+            margin: 0;
+            box-sizing: border-box;
+            width: 350px;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 9%, rgba(148, 148, 148, 1) 97%);
+            height: 100%;
+            top: 0;
+            left: -350px;
+            transition: left .2s;
+            z-index: 2;
+            -webkit-transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+        }
+
+        .hidden-menu-ticker {
+            display: none;
+        }
+
+        .btn-menu {
+            color: gray;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, 1) 9%, rgba(148, 148, 148, 1) 97%);
+            background-color: gray;
+            padding: 5px;
+            position: fixed;
+            top: 5px;
+            left: 5px;
+            cursor: pointer;
+            transition: left .23s;
+            z-index: 3;
+            width: 25px;
+            -webkit-transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+        }
+
+        .btn-menu span {
+            display: block;
+            height: 25px;
+
+            background-color: #fff;
+            margin: 5px 0 0;
+            transition: all .1s linear .23s;
+            position: relative;
+        }
+
+        .btn-menu span.first {
+            margin-top: 0;
+        }
+
+        .hidden-menu-ticker:checked ~ .btn-menu {
+            left: 320px;
+        }
+
+        .hidden-menu-ticker:checked ~ .hidden-menu {
+            left: 0;
+        }
+
+        .hidden-menu-ticker:checked ~ .btn-menu span.first {
+            -webkit-transform: rotate(45deg);
+            top: 10px;
+        }
+
+        .hidden-menu-ticker:checked ~ .btn-menu span.second {
+            opacity: 0;
+        }
+
+        .hidden-menu-ticker:checked ~ .btn-menu span.third {
+            -webkit-transform: rotate(-45deg);
+            top: -10px;
+        }
+
+        .category-wrap ul {
+            color: white;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            border-top: 1px solid rgba(0, 0, 0, .3);
+        }
+
+        .category-wrap li {
+            margin: 12px 0 0 0px;
+        }
+
+        .category-wrap a {
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            color: white;
+            padding: 5px;
+            position: relative;
+            transition: .3s linear;
+        }
+
+        .category-wrap a:after {
+            color: black;
+            font-family: FontAwesome;
+            position: absolute;
+            right: 5px;
+            color: white;
+            transition: .1s linear;
+        }
+
+        .category-wrap a:hover {
+            background: #ffffff;
+            color: black;
+
+
+    </style>
+
+</head>
+
+
+<body class="text-center"></body>
+{% if request.user.is_authenticated %}
+    <input type="checkbox" id="hmt" class="hidden-menu-ticker">
+    <label class="btn-menu" for="hmt">
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+
+    </label>
+    <ul class="hidden-menu category-wrap">
+        <li class="category-wrap"><a href="/admin">Панель Администратора</a></li>
+        <li class="category-wrap"><a href="/add">Добавить</a></li>
+        <li class="category-wrap"><a href="">Изменить</a></li>
+        <li class="category-wrap"><a href="/logout">Выйти</a></li>
+    </ul>
+{% endif %}
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
+            <nav class="nav nav-masthead justify-content-center justify-content">
+                <hr class="hr-shelf">
+            </nav>
+            <nav class="nav nav-masthead justify-content-center justify-content">
+                <h1 class="title">Средняя школа №16 г. Орши</h1>
+            </nav>
+            <nav class="nav nav-masthead justify-content-center justify-content">
+                <a class="border-button" href="/">Главная</a>
+                <a class="border-button" href="https://school16-orsha.by/" target="_blank">Перейти на сайт</a>
+            </nav>
+            <nav class="nav nav-masthead justify-content-center justify-content">
+                <a class="border-button" href="/natch">1-4 классы</a>
+                <a class="border-button" href="/sred">5-9 классы</a>
+                <a class="border-button" href="">10</a>
+                <a class="border-button" href="">11</a>
+            </nav>
+            <nav class="nav nav-masthead justify-content-center justify-content">
+                <hr class="hr-shelf">
+            </nav>
+        </div>
+    </header>
+
+    <main role="main" class="inner">
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            Контакты: +375(216)53-55-48. Email: school16.orsha@yandex.by<br>
+            Адрес: г.Орша, ул. Льва Толстого, 7. Индекс: 211391.<br>
+            ©2020-2021<br>
+            Разработчик: daniyel.ws@gmail.com</p>
+        </div>
+    </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
