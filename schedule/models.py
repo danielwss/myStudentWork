@@ -15,16 +15,27 @@ class Lesson(models.Model):
 
 
 class Class(models.Model):
-    name = models.CharField(verbose_name='Класс', max_length=50)
+    a = 'А'
+    b = 'Б'
+    v = 'В'
+    g = 'Г'
+    class_name = [
+        (a, 'А'),
+        (b, 'Б'),
+        (v, 'В'),
+        (g, 'Г'),
+    ]
+    name = models.CharField(verbose_name='Класс', choices=class_name, max_length=50)
+    class_number = models.IntegerField(blank=True, null=True)
     school_name = models.ForeignKey('School', verbose_name='Название школы', on_delete=models.PROTECT, related_name='сlasses', blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name}{self.class_number}'
 
     class Meta:
         verbose_name = 'Класс'
         verbose_name_plural = 'Классы'
-        ordering = ['school_name', 'name']
+        ordering = ['school_name', 'class_number', 'name']
 
 
 class Weekday(models.Model):
@@ -98,15 +109,16 @@ class Audience(models.Model):
 
 
 class School(models.Model):
-    school_name = models.CharField(verbose_name='Школа', max_length=100, blank=True)
+    school_name = models.CharField(verbose_name='Школа', max_length=100, blank=True, default='ГУО СШ№')
+    school_number = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return self.school_name
+        return f'{self.school_name}{self.school_number}'
 
     class Meta:
         verbose_name = 'Школа'
         verbose_name_plural = 'Школы'
-        ordering = ['school_name']
+        ordering = ['school_number']
 
 
 class Teacher(models.Model):

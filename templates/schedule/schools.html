@@ -8,7 +8,7 @@
         <div class="my-div">
             <nav >
                 {% for school in schools %}
-                     <a class="border-button" href="{% url 'classlist' school.id %}">{{  school.school_name }}</a>
+                     <a class="border-button" href="{% url 'classlist' school.id %}">{{  school.school_name }}{{ school.school_number }}</a>
                 {% endfor %}
             </nav>
         </div>

@@ -3,8 +3,8 @@ from .models import *
 
 
 class SchoolAdmin(admin.ModelAdmin):
-    list_display = ('id', 'school_name',)
-    list_display_links = ('id', 'school_name',)
+    list_display = ('school_number',)
+    list_display_links = ('school_number',)
 
 
 class LessonAdmin(admin.ModelAdmin):
@@ -12,7 +12,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ('name', 'school_name')
+    list_display = ('class_number', 'name', 'school_name')
     list_filter = ('school_name',)
 
 

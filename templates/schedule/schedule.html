@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ class_name.name }}
+    {{ class_name.class_number }}{{ class_name.name }}
 {% endblock %}
 {% block content %}
     <h1 class="title">Расписание уроков</h1>
@@ -49,7 +49,8 @@
                 <td>{{ schedule.teacher }}</td>
                 {% if request.user.is_authenticated %}
                     <td>
-                        <a class="btn btn-warning" href="#">Изменить</a><a class="btn btn-danger" href="#">Удалить</a>
+                        <a class="btn btn-warning" href="#">Изменить</a>
+                        <a class="btn btn-danger">Удалить</a>
                     </td>
                 {% endif %}
             </tr>

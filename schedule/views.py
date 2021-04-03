@@ -17,7 +17,7 @@ from .models import *
 #
 #
 
-## Темплей вьюхи(Главная, 1-4, 5-9)
+
 class IndexView(TemplateView):
     template_name = 'schedule/schools.html'
 
@@ -65,7 +65,6 @@ class ScheduleView(View):
             return redirect('scheduleview', class_id=class_name.id)
         return redirect('scheduleview', class_id=class_name.id)
 
-## Добавление записей
 
 class AddScheduleView(CreateView):
     form_class = ScheduleAddForm
@@ -76,9 +75,6 @@ class AddScheduleView(CreateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Добавить урок в расписание'
         return context
-
-
-## Auth
 
 
 def user_login(request):

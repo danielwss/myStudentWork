@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ school.school_name }}
+    {{ school.school_name }} {{ school.school_number }}
 {% endblock %}
 {% block content %}
     <div class="my-div">
         <p class="cover-heading-center">
             {% for class in classes %}
-                 <a class="border-button" href="{% url 'scheduleview' class.id %}">{{ class.name }}</a>
+                 <a class="border-button" href="{% url 'scheduleview' class.id %}">{{ class.class_number }}{{ class.name }}</a>
             {% endfor %}
         </p>
     </div>
