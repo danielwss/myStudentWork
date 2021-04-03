@@ -13,3 +13,9 @@ class ScheduleForm(forms.ModelForm):
     class Meta:
         model = Schedule
         fields = ['lesson', 'weekday', 'lesson_time']
+
+
+class ScheduleAddForm(forms.ModelForm):
+    class Meta:
+        model = Schedule
+        fields = ['school', 's_class', 'weekday', 'lesson_time', 'lesson', 'audience', 'teacher']

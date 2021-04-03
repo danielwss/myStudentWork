@@ -237,17 +237,20 @@
 
 
 <body class="text-center"></body>
-{% if request.user.is_authenticated %}
+
     <input type="checkbox" id="hmt" class="hidden-menu-ticker">
     <label class="btn-menu" for="hmt">
     </label>
     <ul class="hidden-menu category-wrap">
+    {% if request.user.is_authenticated %}
         <li class="category-wrap"><a href="/admin">Панель Администратора</a></li>
-        <li class="category-wrap"><a href="/add">Добавить</a></li>
-        <li class="category-wrap"><a href="">Изменить</a></li>
         <li class="category-wrap"><a href="/logout">Выйти</a></li>
+    {% endif %}
+        {% for school in schools %}
+            <li><a class="border-button" href="{% url 'classlist' school.id %}">{{  school.school_name }}</a></li>
+        {% endfor %}
     </ul>
-{% endif %}
+
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <header class="masthead">
         <div class="inner">

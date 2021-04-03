@@ -100,7 +100,6 @@ class Audience(models.Model):
 class School(models.Model):
     school_name = models.CharField(verbose_name='Школа', max_length=100, blank=True)
 
-
     def __str__(self):
         return self.school_name
 

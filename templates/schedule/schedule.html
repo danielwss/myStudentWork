@@ -4,6 +4,27 @@
 {% endblock %}
 {% block content %}
     <h1 class="title">Расписание уроков</h1>
+    {% if request.user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.weekday }}
+            {{ form.lesson_time }}
+            {{ form.lesson }}
+            <select name=teachers>
+                <option selected>Выбрать учителя</option>
+                {% for teacher in teachers %}
+                    <option teachers name="teacher_name" value="{{ teacher.id }}">{{ teacher }}</option>
+                {% endfor %}
+            </select>
+            <select name=audiences>
+                <option selected>Выбрать аудиторию</option>
+                {% for audience in audiences %}
+                    <option audiences name="audience_name" value="{{ audience }}">{{ audience }}</option>
+                {% endfor %}
+            </select>
+            <input class="border-button" type="submit" value="Добавить">
+        </form>
+    {% endif %}
 
     <table class="table table-striped table-dark">
         <thead>
@@ -13,6 +34,9 @@
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
+            {% if request.user.is_authenticated %}
+                <th>Элементы управления</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -23,29 +47,18 @@
                 <td>{{ schedule.lesson }}</td>
                 <td>{{ schedule.audience }}</td>
                 <td>{{ schedule.teacher }}</td>
+                {% if request.user.is_authenticated %}
+                    <td>
+                        <a class="btn btn-warning" href="#">Изменить</a><a class="btn btn-danger" href="#">Удалить</a>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
 
         </tbody>
     </table>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.weekday }}
-        {{ form.lesson_time }}
-        {{ form.lesson }}
-        <select name=teachers><option selected>Выбрать учителя</option>
-            {% for teacher in teachers %}
-                <option teachers name="teacher_name" value="{{ teacher.id }}">{{ teacher }}</option>
-            {% endfor %}
-        </select>
-        <select name=audiences><option selected>Выбрать аудиторию</option>
-            {% for audience in audiences %}
-                <option audiences name="audience_name" value="{{ audience }}">{{ audience }}</option>
-            {% endfor %}
-        </select>
-    <input class="border-button" type="submit" value="Добавить">
-    </form>
+
     {#    {% if cups.count >= 1 %}#}
     {#        {% include 'inc/pagination.html' %}#}
     {#    {% endif %}#}

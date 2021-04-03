@@ -13,6 +13,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 class ClassAdmin(admin.ModelAdmin):
     list_display = ('name', 'school_name')
+    list_filter = ('school_name',)
 
 
 class WeekdayAdmin(admin.ModelAdmin):
@@ -25,15 +26,18 @@ class LessonTimeAdmin(admin.ModelAdmin):
 
 class AudienceAdmin(admin.ModelAdmin):
     list_display = ('audience', 'school_name')
+    list_filter = ('school_name',)
 
 
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('teacher_last_name', 'teacher_first_name', 'teacher_middle_name', 'school_name')
+    list_filter = ('school_name',)
 
 
 class ScheduleAdmin(admin.ModelAdmin):
     list_display = ('s_class', 'weekday', 'lesson_time', 'lesson', 'audience', 'teacher', 'school')
     list_display_links = ('s_class', 'weekday', 'lesson_time', 'lesson', 'audience', 'teacher')
+    list_filter = ('school', 'weekday')
 
 
 admin.site.register(School, SchoolAdmin)

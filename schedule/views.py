@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.views.generic.base import View
 
-from .forms import UserLoginForm, ScheduleForm
+from .forms import UserLoginForm, ScheduleForm, ScheduleAddForm
 from .models import *
 
 
@@ -34,35 +34,6 @@ class ClassList(View):
         classes = Class.objects.filter(school_name=school)
         context = {'school': school, 'classes': classes}
         return render(request, 'schedule/index.html', context)
-
-# class IndexView(TemplateView):
-#     template_name = 'schedule/index.html'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Главная страница'
-#         return context
-
-
-class NatchView(TemplateView):
-    template_name = 'schedule/1-4.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Певрые - четвёртые классы'
-        return context
-
-
-class SredView(TemplateView):
-    template_name = 'schedule/5-9.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Пятые - девятые классы'
-        return context
-
-
-## CreateView
 
 
 class ScheduleView(View):
@@ -97,7 +68,7 @@ class ScheduleView(View):
 ## Добавление записей
 
 class AddScheduleView(CreateView):
-    form_class = ScheduleForm
+    form_class = ScheduleAddForm
     template_name = 'schedule/add.html'
     success_url = reverse_lazy('home')
 
