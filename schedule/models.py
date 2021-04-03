@@ -11,7 +11,7 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = 'Урок'
         verbose_name_plural = 'Уроки'
-        ordering = ['pk']
+        ordering = ['name']
 
 
 class Class(models.Model):
@@ -24,7 +24,7 @@ class Class(models.Model):
     class Meta:
         verbose_name = 'Класс'
         verbose_name_plural = 'Классы'
-        ordering = ['pk']
+        ordering = ['school_name', 'name']
 
 
 class Weekday(models.Model):
@@ -94,7 +94,7 @@ class Audience(models.Model):
     class Meta:
         verbose_name = 'Аудитория'
         verbose_name_plural = 'Аудитории'
-        ordering = ['pk']
+        ordering = ['audience', 'school_name']
 
 
 class School(models.Model):
@@ -107,7 +107,7 @@ class School(models.Model):
     class Meta:
         verbose_name = 'Школа'
         verbose_name_plural = 'Школы'
-        ordering = ['pk', 'school_name']
+        ordering = ['school_name']
 
 
 class Teacher(models.Model):
@@ -122,7 +122,7 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = 'Учитель'
         verbose_name_plural = 'Учителя'
-        ordering = ['teacher_last_name']
+        ordering = ['teacher_last_name', 'school_name']
 
 
 class Schedule(models.Model):
@@ -140,5 +140,5 @@ class Schedule(models.Model):
     class Meta:
         verbose_name = 'Расписание'
         verbose_name_plural = 'Расписание'
-        unique_together = ('school', 'teacher', 'audience', 'lesson_time')
+        # unique_together = ('school', 'teacher', 'audience', 'lesson_time')
         ordering = ['weekday', 'lesson_time']

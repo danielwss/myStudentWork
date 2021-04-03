@@ -3,9 +3,11 @@
     {{ school.school_name }}
 {% endblock %}
 {% block content %}
-        <p class="lead">
+    <div class="my-div">
+        <p class="cover-heading-center">
             {% for class in classes %}
                  <a class="border-button" href="{% url 'scheduleview' class.id %}">{{ class.name }}</a>
             {% endfor %}
         </p>
+    </div>
 {% endblock %}

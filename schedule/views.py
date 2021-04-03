@@ -84,7 +84,6 @@ class ScheduleView(View):
             print(request.POST.getlist('teachers')[0])
             audience = Audience.objects.get(audience=request.POST.getlist('audiences')[0], school_name = school)
             teacher = Teacher.objects.get(id=request.POST.getlist('teachers')[0])
-            # try:
             schedule = Schedule.objects.create(weekday=form.cleaned_data['weekday'],
                                                lesson_time=form.cleaned_data['lesson_time'],
                                                lesson=form.cleaned_data['lesson'],
@@ -92,22 +91,20 @@ class ScheduleView(View):
                                                teacher=teacher,
                                                school=school,
                                                s_class=class_name)
-            # catch django.db.utils.IntegrityError:
-
             return redirect('scheduleview', class_id=class_name.id)
         return redirect('scheduleview', class_id=class_name.id)
 
 ## Добавление записей
 
-# class AddScheduleView(CreateView):
-#     form_class = ScheduleForm
-#     template_name = 'schedule/add.html'
-#     success_url = reverse_lazy('home')
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['title'] = 'Добавить урок в расписание'
-#         return context
+class AddScheduleView(CreateView):
+    form_class = ScheduleForm
+    template_name = 'schedule/add.html'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавить урок в расписание'
+        return context
 
 
 ## Auth
