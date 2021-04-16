@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from django.views.generic.base import View
 
+
 from .forms import UserLoginForm, ScheduleForm, ScheduleAddForm
 from .models import *
 

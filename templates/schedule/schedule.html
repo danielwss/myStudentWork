@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ class_name.class_number }}{{ class_name.name }}
+       {{ School.school_name }}{{ School.school_number }} {{ class_name.class_number }}{{ class_name.name }}
 {% endblock %}
 {% block content %}
     <h1 class="title">Расписание уроков</h1>
@@ -28,7 +28,7 @@
 
     <table class="table table-striped table-dark">
         <thead>
-        <tr>
+        <tr class>
             <th>День недели</th>
             <th>Номер урока</th>
             <th>Предмет</th>
@@ -59,9 +59,5 @@
         </tbody>
     </table>
 
-
-    {#    {% if cups.count >= 1 %}#}
-    {#        {% include 'inc/pagination.html' %}#}
-    {#    {% endif %}#}
 
 {% endblock %}
