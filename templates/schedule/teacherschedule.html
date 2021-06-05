@@ -1,39 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ class_name.school_name }} {{ class_name.class_number }}{{ class_name.name }}
+    {{ School.school_name }}{{ School.school_number }} {{ class_name.class_number }}{{ class_name.name }}
 {% endblock %}
 {% block content %}
     <div>
-        <p></p>
-        <div><h1 class="text-white">{{ class_name.school_name }}</h1></div>
-        <div><h2 class="text-white">{{ class_name.class_number }}{{ class_name.name }}</h2></div>
-    </div>
-    {% if request.user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.weekday }}
-            {{ form.lesson_time }}
-            {{ form.lesson }}
-            <select name=teachers>
-                <option selected>Выбрать учителя</option>
-                {% for teacher in teachers %}
-                    <option teachers name="teacher_name" value="{{ teacher.id }}">{{ teacher }}</option>
-                {% endfor %}
-            </select>
-            <select name=audiences>
-                <option selected>Выбрать аудиторию</option>
-                {% for audience in audiences %}
-                    <option audiences name="audience_name" value="{{ audience }}">{{ audience }}</option>
-                {% endfor %}
-            </select>
-            <input class="button7" type="submit" value="Добавить">
-        </form>
-    {% endif %}
-
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <div class="inner">
-        <nav class="nav nav-masthead justify-content-center justify-content">
-            <table>
+        <nav>
+            <p></p>
+            <table align="center">
                 <td><p class="text-white"><a class="btn btn-light" href="#1">Понедельник</a></p></td>
                 <td><p class="text-white"><a class="btn btn-light" href="#2">Вторник</a></p></td>
                 <td><p class="text-white"><a class="btn btn-light" href="#3">Среда</a></p></td>
@@ -47,6 +20,7 @@
         <thead>
         <tr class>
             <th>Номер урока</th>
+            <th>Класс</th>
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
@@ -60,13 +34,15 @@
             {% if schedule.weekday.name == 'Понедельник' %}
                 <tr>
                     <td>{{ schedule.lesson_time }}</td>
+                    <td>{{ schedule.s_class }}</td>
                     <td>{{ schedule.lesson }}</td>
                     <td>{{ schedule.audience }}</td>
                     <td>{{ schedule.teacher }}</td>
                     {% if request.user.is_authenticated %}
                         <td>
-                            <a class="btn btn-warning" href="{% url 'scheduleupdate' class_name.id schedule.id %}">Изменить</a>
-                            <form method="post" action="{% url 'scheduledelete' class_name.id schedule.id %}">
+                            <a class="btn btn-warning"
+                               href="{% url 'scheduleupdate' schedule.s_class.id schedule.id %}">Изменить</a>
+                            <form method="post" action="{% url 'scheduledelete' schedule.s_class.id schedule.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
@@ -75,6 +51,7 @@
                 </tr>
             {% endif %}
         {% endfor %}
+
         </tbody>
     </table>
     <p class="title" id="2">Вторник</p>
@@ -82,6 +59,7 @@
         <thead>
         <tr class>
             <th>Номер урока</th>
+            <th>Класс</th>
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
@@ -95,13 +73,15 @@
             {% if schedule.weekday.name == 'Вторник' %}
                 <tr>
                     <td>{{ schedule.lesson_time }}</td>
+                    <td>{{ schedule.s_class }}</td>
                     <td>{{ schedule.lesson }}</td>
                     <td>{{ schedule.audience }}</td>
                     <td>{{ schedule.teacher }}</td>
                     {% if request.user.is_authenticated %}
                         <td>
-                            <a class="btn btn-warning" href="{% url 'scheduleupdate' class_name.id schedule.id %}">Изменить</a>
-                            <form method="post" action="{% url 'scheduledelete' class_name.id schedule.id %}">
+                            <a class="btn btn-warning"
+                               href="{% url 'scheduleupdate' schedule.s_class.id schedule.id %}">Изменить</a>
+                            <form method="post" action="{% url 'scheduledelete' schedule.s_class.id schedule.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
@@ -110,6 +90,7 @@
                 </tr>
             {% endif %}
         {% endfor %}
+
         </tbody>
     </table>
     <p class="title" id="3">Среда</p>
@@ -117,6 +98,7 @@
         <thead>
         <tr class>
             <th>Номер урока</th>
+            <th>Класс</th>
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
@@ -130,13 +112,15 @@
             {% if schedule.weekday.name == 'Среда' %}
                 <tr>
                     <td>{{ schedule.lesson_time }}</td>
+                    <td>{{ schedule.s_class }}</td>
                     <td>{{ schedule.lesson }}</td>
                     <td>{{ schedule.audience }}</td>
                     <td>{{ schedule.teacher }}</td>
                     {% if request.user.is_authenticated %}
                         <td>
-                            <a class="btn btn-warning" href="{% url 'scheduleupdate' class_name.id schedule.id %}">Изменить</a>
-                            <form method="post" action="{% url 'scheduledelete' class_name.id schedule.id %}">
+                            <a class="btn btn-warning"
+                               href="{% url 'scheduleupdate' schedule.s_class.id schedule.id %}">Изменить</a>
+                            <form method="post" action="{% url 'scheduledelete' schedule.s_class.id schedule.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
@@ -145,13 +129,17 @@
                 </tr>
             {% endif %}
         {% endfor %}
+
         </tbody>
+
     </table>
+
     <p class="title" id="4">Четверг</p>
     <table class="table table-striped table-dark">
         <thead>
         <tr class>
             <th>Номер урока</th>
+            <th>Класс</th>
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
@@ -165,13 +153,15 @@
             {% if schedule.weekday.name == 'Четверг' %}
                 <tr>
                     <td>{{ schedule.lesson_time }}</td>
+                    <td>{{ schedule.s_class }}</td>
                     <td>{{ schedule.lesson }}</td>
                     <td>{{ schedule.audience }}</td>
                     <td>{{ schedule.teacher }}</td>
                     {% if request.user.is_authenticated %}
                         <td>
-                            <a class="btn btn-warning" href="{% url 'scheduleupdate' class_name.id schedule.id %}">Изменить</a>
-                            <form method="post" action="{% url 'scheduledelete' class_name.id schedule.id %}">
+                            <a class="btn btn-warning"
+                               href="{% url 'scheduleupdate' schedule.s_class.id schedule.id %}">Изменить</a>
+                            <form method="post" action="{% url 'scheduledelete' schedule.s_class.id schedule.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
@@ -180,13 +170,16 @@
                 </tr>
             {% endif %}
         {% endfor %}
+
         </tbody>
+
     </table>
     <p class="title" id="5">Пятница</p>
     <table class="table table-striped table-dark">
         <thead>
         <tr class>
             <th>Номер урока</th>
+            <th>Класс</th>
             <th>Предмет</th>
             <th>Аудитория</th>
             <th>Учитель</th>
@@ -200,13 +193,15 @@
             {% if schedule.weekday.name == 'Пятница' %}
                 <tr>
                     <td>{{ schedule.lesson_time }}</td>
+                    <td>{{ schedule.s_class }}</td>
                     <td>{{ schedule.lesson }}</td>
                     <td>{{ schedule.audience }}</td>
                     <td>{{ schedule.teacher }}</td>
                     {% if request.user.is_authenticated %}
                         <td>
-                            <a class="btn btn-warning" href="{% url 'scheduleupdate' class_name.id schedule.id %}">Изменить</a>
-                            <form method="post" action="{% url 'scheduledelete' class_name.id schedule.id %}">
+                            <a class="btn btn-warning"
+                               href="{% url 'scheduleupdate' schedule.s_class.id schedule.id %}">Изменить</a>
+                            <form method="post" action="{% url 'scheduledelete' schedule.s_class.id schedule.id %}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
@@ -215,6 +210,8 @@
                 </tr>
             {% endif %}
         {% endfor %}
+
         </tbody>
+
     </table>
 {% endblock %}

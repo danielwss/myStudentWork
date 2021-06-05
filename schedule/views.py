@@ -67,6 +67,58 @@ class ScheduleView(View):
         return redirect('scheduleview', class_id=class_name.id)
 
 
+class Teachers(View):
+    def get(self, request, school_id):
+        teachers = Teacher.objects.filter(school_name__id=school_id)
+        return render(request, 'schedule/teachers.html', context={'teachers': teachers})
+
+
+class TeacherSchedule(View):
+    def get(self, request, teacher_id):
+        schedules = Schedule.objects.filter(teacher__id=teacher_id)
+        return render(request, 'schedule/teacherschedule.html', context={'schedules': schedules})
+
+
+class ScheduleUpdate(View):
+    def get(self, request, schedule_id, class_id):
+        class_name = Class.objects.get(id=class_id)
+        schedule=Schedule.objects.get(id=schedule_id)
+        schedule_form = ScheduleForm(instance=schedule)
+        teachers = Teacher.objects.filter(school_name=class_name.school_name)
+        audiences = Audience.objects.filter(school_name=class_name.school_name)
+        return render(request, 'schedule/scheduleedit.html', context={'schedule_form': schedule_form, 'schedule': schedule, 'teachers': teachers, 'audience': audiences})
+
+    def post(self, request, schedule_id, class_id):
+        class_name = Class.objects.get(id=class_id)
+        schedule=Schedule.objects.get(id=schedule_id)
+        schedule_form = ScheduleForm(request.POST, instance=schedule)
+        teachers = Teacher.objects.filter(school_name=class_name.school_name)
+        school = School.objects.get(id=class_name.school_name.id)
+        audiences = Audience.objects.filter(school_name=class_name.school_name)
+        if schedule_form.is_valid():
+            print(request.POST)
+            print(request.POST.getlist('audiences'))
+            print(request.POST.getlist('audiences')[0])
+            audience = Audience.objects.get(id=request.POST.getlist('audiences')[0], school_name=school)
+            teacher = Teacher.objects.get(id=request.POST.getlist('teachers')[0])
+            schedule.weekday=schedule_form.cleaned_data['weekday']
+            schedule.lesson_time=schedule_form.cleaned_data['lesson_time']
+            schedule.lesson=schedule_form.cleaned_data['lesson']
+            schedule.audience=audience
+            schedule.teacher=teacher
+            schedule.school=school
+            schedule.s_class=class_name
+            schedule.save()
+            return redirect('scheduleview', class_id=class_name.id)
+        return render(request, 'schedule/scheduleedit.html', context={'schedule_form': schedule_form, 'schedule': schedule, 'teachers': teachers, 'audience': audiences})
+
+
+class ScheduleDelete(View):
+    def post(self, request, schedule_id, class_id):
+        schedule = Schedule.objects.get(id=schedule_id)
+        schedule.delete()
+        return redirect('scheduleview', class_id=class_id)
+
 class AddScheduleView(CreateView):
     form_class = ScheduleAddForm
     template_name = 'schedule/add.html'

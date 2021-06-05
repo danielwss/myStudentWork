@@ -30,7 +30,7 @@ class Class(models.Model):
     school_name = models.ForeignKey('School', verbose_name='Название школы', on_delete=models.PROTECT, related_name='сlasses', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name}{self.class_number}'
+        return f'{self.class_number}{self.name}'
 
     class Meta:
         verbose_name = 'Класс'

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}
+{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ schedule_form.weekday }}
+        {{ schedule_form.lesson_time }}
+        {{ schedule_form.lesson }}
+
+        <select class="form-select" aria-label="Default select example" name=teachers>
+            <option selected value="{{ schedule.teacher.id }}" name="teacher_name">{{ schedule.teacher }}</option>
+            {% for teacher in teachers %}
+                {% if teacher != schedule.teacher %}
+                    <option value="{{ teacher.id }}" name="teacher_name">{{ teacher }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <select class="form-select" aria-label="Default select example" name=audiences>
+            <option selected value="{{ schedule.audience.id }}" name="audience_name">{{ schedule.audience }}</option>
+            {% for audience in audiences %}
+
+                {% if audience != schedule.audience %}
+                    <option value="{{ audience.id }}" name="audience_name">{{ audience }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <input class="border-button" type="submit" value="Сохранить">
+    </form>
+{% endblock %}
