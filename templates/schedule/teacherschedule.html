@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}
-    {{ School.school_name }}{{ School.school_number }} {{ class_name.class_number }}{{ class_name.name }}
+    333{{ schedule.teacher }}
 {% endblock %}
 {% block content %}
-    <div>
-        <nav>
-            <p></p>
-            <table align="center">
+    <h1 class="text-white">{{ schedule.teacher }}</h1>
+    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <div class="inner">
+        <nav class="nav nav-masthead justify-content-center justify-content">
+            <table>
                 <td><p class="text-white"><a class="btn btn-light" href="#1">Понедельник</a></p></td>
                 <td><p class="text-white"><a class="btn btn-light" href="#2">Вторник</a></p></td>
                 <td><p class="text-white"><a class="btn btn-light" href="#3">Среда</a></p></td>

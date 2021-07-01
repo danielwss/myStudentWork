@@ -3,6 +3,7 @@
     {{ school.school_name }} {{ school.school_number }}
 {% endblock %}
 {% block content %}
+    <h1 class="text-white">{{ school.school_name }}{{ school.school_number }}</h1>
     <div class="my-div">
         <nav>
             <a class="border-button" href="{% url 'teachers' school.id %}">Учителя</a>
